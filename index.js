@@ -1,7 +1,10 @@
 
 const voiceChat = new P2PVoiceChat({ 
     channelId: 'testvchat',
-    signalSend: send
+    signalSend: send,
+    audioMeter: true,
+    onaudiometer: showAudio,
+    on
 });
 
 

@@ -20,6 +20,7 @@ class P2PVoiceChat {
         onreceiveinvite = ()=>{},
         onreceiveaccept = ()=>{},
         onreceivereject = ()=>{},
+        onvoicechatready = ()=>{},
     }) {
         this.incurse = false;
         this.channelId = channelId;
@@ -28,6 +29,7 @@ class P2PVoiceChat {
         this.onreceiveinvite = onreceiveinvite;
         this.onreceiveaccept = onreceiveaccept;
         this.onreceivereject = onreceivereject;
+        this.onvoicechatready = onvoicechatready;
     
         this.emitter = new P2PVoiceChannel({
             role: 'master',
@@ -37,6 +39,7 @@ class P2PVoiceChat {
             onchannelclosed: onend,
             onchannelready: (function() {
                 this.incurse = true;
+                this.onvoicechatready(this);
             }).bind(this),
             onreceiveaccept: (function() {
                 console.log('Call accepted!');
