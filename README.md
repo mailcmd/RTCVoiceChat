@@ -44,3 +44,41 @@ sequenceDiagram
 %%{init:{'themeCSS':':is(#root-4,#root-7) rect,#actor4,#actor7 { fill: #CAFFBF; stroke: #8EC383; };:is(#root-5,#root-6) rect,#actor5,#actor6 { fill: #A0C4FF; stroke: #6589C3; };g:has(.actor.actor-bottom) { display: none; }'}}%%
     
 ```
+
+## How to use
+First you need instantiate **RTCVoiceChat**:
+```javascript
+const voiceChat = new P2PVoiceChat({
+    channelId: 'testvchat', // any text 
+    signalSend: send // the function name that send signal to the other end
+});
+```
+*signalSend* pass 4 parameters to the function: _channelId_, _type_, _data_ and _src_ (src carries the role of the sender, master or slave). 
+
+Then, assuming that you have a signal receiver in a guessed object *signaling*, you must leave it up manage signals to voiceChat instance: 
+```javascript
+// Let's assume that e carries the data we need to send to the voiceChat signal processor.
+signaling.onmessage = e => voiceChat.processSignal(e.type, e.data, e.src);
+```
+
+The _e_ parameter received in _onmessage_ should have at least _type_, _data_ and _src_. 
+
+## P2PVoiceChat constructor parameters
+
+```javascript
+const voiceChat = new P2PVoiceChat({
+    channelId: <text>            // Any text 
+    signalSend: <function>       // Function that send signal to the other end,
+    iceServers: <object>         // iceServers data. 
+                                 // Default is: { iceServers: [{ urls: ["stun:stun.gmx.net"] }] }
+    enableSounds: <boolean>      // Enable or not calling and ringing tone at each end. Default true.
+    audiometer: <boolean>        // If true send to onaudiometer function audio intensity (0 to 100);
+    onaudiometer: <function>     // Function that allow to draw a VUMeter or something like that.
+                                 // P2PVoiceChat pass 2 parameters: intensity (1 to 100) and P2PVoiceChat instance
+    onend: <function>            // It is executed once the communication is terminated when one of the 2 ends hangs up the call.
+                                 // P2PVoiceChat pass as parameter P2PVoiceChat instance
+    onreceiveinvite: <function>  // It is executed when the receiver part of P2PVoiceChat receive an "invite".
+    onreceiveaccept: <function>  // It is executed when the emitter part of P2PVoiceChat receive an "accept".
+    onreceivereject: <function>  // It is executed when the emitter part of P2PVoiceChat receive a "reject".   
+});
+```
