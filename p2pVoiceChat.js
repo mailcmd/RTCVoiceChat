@@ -15,6 +15,7 @@ class P2PVoiceChat {
         iceServers = null,
         enableSounds = true,
         onend = ()=>{},
+        audioMeter = false,
         onaudiometer = ()=>{},
         onreceiveinvite = ()=>{},
         onreceiveaccept = ()=>{},
@@ -52,13 +53,13 @@ class P2PVoiceChat {
             channelId: channelId,
             iceOpts: iceServers,
             signalSend: signalSend,
-            onchannelready: this.responseCall.bind(this),
+            onchannelready: this.#responseCall.bind(this),
             onchannelclosed: onend,
             onreceiveinvite: (function(data) {
                 console.log('Incoming call...');
                 this.onreceiveinvite(data);
             }).bind(this),
-            audioMeter: true,
+            audioMeter: audioMeter,
             onaudiometer: onaudiometer
         });        
     }
@@ -88,7 +89,7 @@ class P2PVoiceChat {
         this.receiver.sendReject();
     }
     
-    responseCall() {
+    #responseCall() {
         if (this.emitter.status == 'Disconnected') {
             this.emitter.start();
         } else {
@@ -243,6 +244,21 @@ class P2PVoiceChannel {
         this.channelId = cid;
     }
     
+    mute() {        
+        if (!this.audioTracks) {
+            console.warn('Audio not initialized!');
+            return;
+        }
+        this.audioTracks && (this.audioTracks[0].enabled = false);
+    }
+    unmute() {
+        if (!this.audioTracks) {
+            console.warn('Audio not initialized!');
+            return;
+        }
+        this.audioTracks && (this.audioTracks[0].enabled = true);
+    }
+
     end() {
         if (this.status == 'Disconnected') return;
         if (this.connection) this.connection.close();
@@ -339,21 +355,6 @@ class P2PVoiceChannel {
         this.signalSend(null, 'ready');
     }
     
-    mute() {        
-        if (!this.audioTracks) {
-            console.warn('Audio not initialized!');
-            return;
-        }
-        this.audioTracks && (this.audioTracks[0].enabled = false);
-    }
-    unmute() {
-        if (!this.audioTracks) {
-            console.warn('Audio not initialized!');
-            return;
-        }
-        this.audioTracks && (this.audioTracks[0].enabled = true);
-    }
-
     // role slave methods
     recvInvite(data) {
         // It guessed that in this function the user has to receive a visual warning 
