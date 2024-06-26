@@ -85,5 +85,5 @@ const voiceChat = new P2PVoiceChat({
 
 ## How to test
 
-Clone the repository and load twice in 2 tabs of the browser. To pass signals this test use (BroadcastChannel)[https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel].
+Clone the repository and load index.html in 2 differents tabs of the browser. To pass signals this test use [BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel).
 
