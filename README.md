@@ -82,3 +82,8 @@ const voiceChat = new P2PVoiceChat({
     onreceivereject: <function>  // It is executed when the emitter part of P2PVoiceChat receive a "reject".   
 });
 ```
+
+## How to test
+
+Clone the repository and load twice in 2 tabs of the browser. To pass signals this test use (BroadcastChannel)[https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel].
+
