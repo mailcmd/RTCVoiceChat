@@ -79,9 +79,25 @@ const voiceChat = new P2PVoiceChat({
                                  // P2PVoiceChat pass as parameter P2PVoiceChat instance
     onreceiveinvite: <function>  // It is executed when the receiver part of P2PVoiceChat receive an "invite".
     onreceiveaccept: <function>  // It is executed when the emitter part of P2PVoiceChat receive an "accept".
-    onreceivereject: <function>  // It is executed when the emitter part of P2PVoiceChat receive a "reject".   
+    onreceivereject: <function>  // It is executed when the emitter part of P2PVoiceChat receive a "reject".
+    onvoicechatready: <function> // It is executed when both channels of P2PVoiceChat (emitter and receiver) are ready to talk.
 });
 ```
+
+## P2PVoiceChat useful instance methods 
+```javascript
+P2PVoiceChat.call()    // start the call sending an invite to the other end. 
+P2PVoiceChat.reject()  // reject the call after the other end send an **invite**. 
+P2PVoiceChat.accept()  // accept the call after the other end send an **invite**.
+P2PVoiceChat.end()     // end the call and send an **end** signal to the other end. 
+```
+
+## P2PVoiceChat useful instance properties
+```javascript
+P2PVoiceChat.incurse   // true if the call is in curse.
+```
+
+Yes, that's all!! Take a look to the code if you need some more "hacky" access. 
 
 ## How to test
 
