@@ -1,3 +1,6 @@
+<h2>Just a clarification. This is a lab experiment just for fun, <b>YOU SHOULD NOT USE THIS IN PRODUCTION ENVIRONMENTS!!!!</b> I have barely tested this library and it is highly likely to have some bad bugs. Use this library at your own risk... or take the time to review it, fix it and improve it before any serious use.</h2>
+<br/>
+
 # RTCVoiceChat
 This is just an experiment about WebRTC and audio channels. I looked for a simple approach. First I made a base class (**P2PVoiceChannel**) to manage one channel to send audio from source (named **master** role) to destination (named **slave** role). Then I made a container class (**P2PVoiceChat**) that instance 2 times the **P2PVoiceChannel**, one as **EMITTER** and other for **RECEIVER**. 
 
